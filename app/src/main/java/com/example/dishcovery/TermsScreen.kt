@@ -131,7 +131,9 @@ fun TermsScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Button(
-                    onClick = { navController?.navigate("main") },
+                    onClick = { navController?.navigate("home") {
+                        popUpTo("terms") { inclusive = true }
+                    } },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp),

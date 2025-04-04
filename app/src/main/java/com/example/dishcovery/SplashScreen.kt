@@ -42,9 +42,9 @@ fun SplashScreen(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(R.mipmap.ic_launcher),
+                painter = painterResource(R.mipmap.ic_launcher_foreground),
                 contentDescription = "App Logo",
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(200.dp),
                 //colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
             )
         }
