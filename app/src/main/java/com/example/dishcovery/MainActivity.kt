@@ -35,11 +35,10 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "splash"
+                        startDestination = "terms"
                     ) {
                         composable("splash") { SplashScreen(navController) }
                         composable("terms") { TermsScreen(navController) }
-                        // Add more destinations as needed
                     }
                 }
             }
@@ -47,16 +46,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(name = "Light Mode",uiMode = UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun TermsScreenPreview() {
-    DishcoveryTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            TermsScreen()
-        }
-    }
-}
+//@Preview(name = "Light Mode",uiMode = UI_MODE_NIGHT_NO)
+//@Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
+//@Composable
+//fun TermsScreenPreview() {
+//    DishcoveryTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            TermsScreen()
+//        }
+//    }
+//}

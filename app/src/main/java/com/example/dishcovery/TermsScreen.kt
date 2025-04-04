@@ -6,15 +6,21 @@ import android.util.TypedValue
 import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,6 +52,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -85,27 +92,64 @@ fun HtmlText(
 }
 
 @Composable
-fun TermsScreen(navController: NavController? = null) {
+fun TermsScreen(navController: NavController) {
     Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        HtmlText(
-            htmlResId = R.string.terms_conditions,
-            modifier = Modifier.padding(bottom = 32.dp),
-            color = MaterialTheme.colorScheme.onSecondary,
-            style = MaterialTheme.typography.bodyLarge.copy(
-                lineHeight = 24.sp
-            )
-        )
         Spacer(modifier = Modifier.height(32.dp))
-        Button(onClick = { navController?.navigate("main") }) {
-            Text("Accept & Continue")
+        Box (
+            modifier = Modifier
+                .weight(1f)
+                .shadow(
+                    elevation = 6.dp,
+                    shape = RoundedCornerShape(8.dp),
+                    clip = true
+                )
+                .background(
+                    color = MaterialTheme.colorScheme.secondary,
+                    shape = RoundedCornerShape(8.dp)
+                )
+        ){
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                HtmlText(
+                    htmlResId = R.string.terms_conditions,
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        lineHeight = 24.sp
+                    )
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+
+                Button(
+                    onClick = { navController?.navigate("main") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.secondary
+                    )
+                ) {
+                    Text(
+                        "Accept & Continue",
+                        style = LocalTextStyle.current.copy(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+            }
         }
     }
+
 }

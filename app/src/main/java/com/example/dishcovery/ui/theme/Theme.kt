@@ -13,20 +13,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
+    primary = Color(0xFF71361E),
+    secondary = Color(0xFF5D4035),
+    tertiary = Color(0xFF3B4507),
     background = Color(0xFF1A110E),
     onSecondary = Color(0xFFF1DFD9),
+    error = Color(0xFF93000A)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Color(0xFF8F4C32),
     secondary = Color(0xFFEEDCD6),
-    tertiary = Pink40,
+    tertiary = Color(0xFF695E30),
     background = Color(0xFFFFF8F6),
     onSecondary = Color(0xFF392E2B),
-
+    error = Color(0xFFBA1A1A),
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -43,14 +44,14 @@ private val LightColorScheme = lightColorScheme(
 fun DishcoveryTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    //dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+//        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+//            val context = LocalContext.current
+//            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+//        }
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
