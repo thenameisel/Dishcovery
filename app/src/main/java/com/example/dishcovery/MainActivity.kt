@@ -40,6 +40,9 @@ class MainActivity : ComponentActivity() {
                         composable("splash") { SplashScreen(navController) }
                         composable("terms") { TermsScreen(navController) }
                         composable("home") { HomeScreen(navController) }
+                        composable("search") {SearchScreen(navController)}
+                        composable("saved") { SavedScreen(navController)  }
+                        composable("create") {CreateScreen(navController)}
                     }
                 }
             }
