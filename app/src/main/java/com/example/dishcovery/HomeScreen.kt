@@ -20,15 +20,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.ComposeNavigator
 import com.example.dishcovery.ui.theme.DishcoveryTheme
 
 @Composable
@@ -39,6 +42,7 @@ fun HomeMenuButton(
     navController: NavController? = null,
     modifier: Modifier = Modifier
 ){
+
     Box (
         modifier = Modifier
             .fillMaxWidth()
@@ -62,14 +66,16 @@ fun HomeMenuButton(
             Column (modifier = Modifier.weight(1f)){
                 Text(
                     text = stringResource(id = title),
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
                     text = stringResource(id = contents),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
             Image(
@@ -86,42 +92,51 @@ fun HomeMenuButton(
 
 
 @Composable
-fun HomeScreen(navController: NavController? = null) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-    ) {
-        Spacer(modifier = Modifier.height(32.dp))
+fun HomeScreen(navController: NavController) {
+    NavBarScreen(navController = navController) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+            ) {
+                Spacer(modifier = Modifier.height(32.dp))
 
-        HomeMenuButton(
-            title = R.string.homeSearchTitle,
-            contents = R.string.homeSearchContents,
-            destination = "Search",
-            navController = navController
-        )
+                HomeMenuButton(
+                    title = R.string.homeSearchTitle,
+                    contents = R.string.homeSearchContents,
+                    destination = "Search",
+                    navController = navController
+                )
 
-        Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
-        HomeMenuButton(
-            title = R.string.homeSavedTitle,
-            contents = R.string.homeSavedContents,
-            destination = "Search",
-            navController = navController
-        )
+                HomeMenuButton(
+                    title = R.string.homeSavedTitle,
+                    contents = R.string.homeSavedContents,
+                    destination = "Search",
+                    navController = navController
+                )
 
-        Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
-        HomeMenuButton(
-            title = R.string.homeCreateTitle,
-            contents = R.string.homeCreateContents,
-            destination = "Search",
-            navController = navController
-        )
+                HomeMenuButton(
+                    title = R.string.homeCreateTitle,
+                    contents = R.string.homeCreateContents,
+                    destination = "Search",
+                    navController = navController
+                )
+            }
+        }
     }
 }
 
-@Preview(name = "Light Mode",uiMode = UI_MODE_NIGHT_NO)
+@Preview(name = "Light Mode", uiMode = UI_MODE_NIGHT_NO)
 @Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun HomeScreenPreview() {
@@ -130,7 +145,19 @@ fun HomeScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-        HomeScreen()
+            val previewNavController = rememberNavControllerForPreview()
+            HomeScreen(navController = previewNavController)
+        }
     }
+}
+
+// Add this helper function to your project
+@Composable
+fun rememberNavControllerForPreview(): NavController {
+    val context = LocalContext.current
+    return remember {
+        NavController(context).apply {
+            navigatorProvider.addNavigator(ComposeNavigator())
+        }
     }
 }
