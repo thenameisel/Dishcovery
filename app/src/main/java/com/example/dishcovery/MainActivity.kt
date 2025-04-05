@@ -50,16 +50,17 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//@Preview(name = "Light Mode",uiMode = UI_MODE_NIGHT_NO)
-//@Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun TermsScreenPreview() {
-//    DishcoveryTheme {
-//        Surface(
-//            modifier = Modifier.fillMaxSize(),
-//            color = MaterialTheme.colorScheme.background
-//        ) {
-//            TermsScreen()
-//        }
-//    }
-//}
+@Preview(name = "Light Mode",uiMode = UI_MODE_NIGHT_NO)
+@Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun TermsScreenPreview() {
+    DishcoveryTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            val previewNavController = rememberNavControllerForPreview()
+            TermsScreen(navController = previewNavController)
+        }
+    }
+}
