@@ -178,7 +178,7 @@ fun IngredientChip(name: String, quantity: String, onDelete: () -> Unit) {
                 text = displayText,
                 modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSecondary,
+                color = MaterialTheme.colorScheme.onPrimary,
             )
             IconButton(
                 onClick = onDelete,
@@ -187,7 +187,7 @@ fun IngredientChip(name: String, quantity: String, onDelete: () -> Unit) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Remove",
-                    tint = MaterialTheme.colorScheme.onSecondary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

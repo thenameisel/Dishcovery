@@ -43,6 +43,7 @@ class MainActivity : ComponentActivity() {
                         composable("search") {SearchScreen(navController)}
                         composable("saved") { SavedScreen(navController)  }
                         composable("create") {CreateScreen(navController)}
+                        composable("view") {ViewScreen(navController)}
                     }
                 }
             }
