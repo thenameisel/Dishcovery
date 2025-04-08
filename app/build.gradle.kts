@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -41,6 +43,18 @@ android {
 
 dependencies {
 
+
+    // Moshi (for JSON parsing)
+    implementation(libs.moshi.kotlin)
+    implementation (libs.converter.moshi)
+    ksp(libs.moshi.kotlin.codegen) // For code generation
+
+    // Room (for local database)
+    implementation(libs.androidx.room.runtime)
+    //implementation (libs.androidx.room.runtime.v260)
+    implementation (libs.androidx.room.ktx) // Coroutine support
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

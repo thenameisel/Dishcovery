@@ -139,6 +139,7 @@ fun SearchScreen(navController: NavController){
                         .padding(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    //TODO this needs to display searched
                     items(20) { index ->
                         SearchItem(
                             strMeal = "Temp Meal Title",

@@ -110,7 +110,7 @@ fun HomeScreen(navController: NavController) {
                 HomeMenuButton(
                     title = R.string.homeSearchTitle,
                     contents = R.string.homeSearchContents,
-                    destination = "Search",
+                    destination = "search",
                     navController = navController
                 )
 
@@ -119,7 +119,7 @@ fun HomeScreen(navController: NavController) {
                 HomeMenuButton(
                     title = R.string.homeSavedTitle,
                     contents = R.string.homeSavedContents,
-                    destination = "Saved",
+                    destination = "saved",
                     navController = navController
                 )
 
@@ -128,7 +128,7 @@ fun HomeScreen(navController: NavController) {
                 HomeMenuButton(
                     title = R.string.homeCreateTitle,
                     contents = R.string.homeCreateContents,
-                    destination = "Create",
+                    destination = "create",
                     navController = navController
                 )
             }
