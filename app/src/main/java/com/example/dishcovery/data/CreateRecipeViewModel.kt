@@ -22,7 +22,8 @@ class CreateRecipeViewModel(private val repository: MealRepository) : ViewModel(
             category = category,
             area = area,
             instructions = instructions,
-            ingredients = Json.encodeToString(ingredients)  // Convert to JSON
+            ingredients = Json.encodeToString(ingredients),  // Convert to JSON
+            mealThumb = ""
         )
         return repository.saveRecipe(recipe)
     }

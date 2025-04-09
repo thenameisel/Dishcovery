@@ -31,51 +31,74 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.dishcovery.ui.theme.DishcoveryTheme
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.dishcovery.data.RecipeDetailViewModel
+import com.example.dishcovery.data.RecipeDetailViewModelFactory
+import kotlinx.serialization.json.Json
 
 
-@Composable
-fun ViewChip(name: String) {
-    val displayText = name
-
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-        color = MaterialTheme.colorScheme.tertiary
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(end = 8.dp)
-        ) {
-            Text(
-                text = displayText,
-                modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimary,
-            )
-
-        }
-    }
-}
+//@Composable
+//fun ViewChip(name: String) {
+//    val displayText = name
+//
+//    Surface(
+//        shape = RoundedCornerShape(16.dp),
+//        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+//        color = MaterialTheme.colorScheme.tertiary
+//    ) {
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            modifier = Modifier.padding(end = 8.dp)
+//        ) {
+//            Text(
+//                text = displayText,
+//                modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
+//                style = MaterialTheme.typography.bodyMedium,
+//                color = MaterialTheme.colorScheme.onPrimary,
+//            )
+//
+//        }
+//    }
+//}
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ViewScreen(navController: NavController){
-    val ingredients = listOf(
-        "Flour" to "2 cups",
-        "Sugar" to "1/2 cup",
-        "Eggs" to "3",
-        "Vanilla Extract" to "1 tsp"
+fun ViewScreen(navController: NavController,recipeId: String? = null){
+
+    val context = LocalContext.current
+    val repository = remember {
+        (context.applicationContext as DishcoveryApp).repository
+    }
+    val apiService = remember {
+        (context.applicationContext as DishcoveryApp).apiService
+    }
+    val viewModel: RecipeDetailViewModel = viewModel(
+        factory = RecipeDetailViewModelFactory(repository, apiService)
     )
-    val tags = listOf(
-        "Crunchy",
-        "Carbs",
-        "Spicy",
-        "Weird"
-    )
-    val strInstructions = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+    LaunchedEffect(recipeId) {
+        recipeId?.let { viewModel.loadRecipe(it) }
+    }
+
+    val recipe by viewModel.recipe
+
+    val ingredients = remember(recipe) {
+        recipe?.ingredients?.let {
+            try {
+                Json.decodeFromString<List<Pair<String, String>>>(it)
+            } catch (e: Exception) {
+                emptyList<Pair<String, String>>() // Fallback if parsing fails
+            }
+        } ?: emptyList()
+    }
+
     NavBarScreen(navController = navController) {
         Column(
             modifier = Modifier
@@ -102,11 +125,13 @@ fun ViewScreen(navController: NavController){
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState())
                 ){
-                    Text(
-                        text = "Meal Title Here", //TODO replace with title variable
-                        style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                    )
+                    recipe?.let { it1 ->
+                        Text(
+                            text = it1.name,
+                            style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                        )
+                    }
                     HorizontalDivider(
                         modifier = Modifier.padding(vertical = 8.dp),
                         thickness = 2.dp,
@@ -119,11 +144,13 @@ fun ViewScreen(navController: NavController){
                             color = MaterialTheme.colorScheme.onSecondary,
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = "Some Food Type",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSecondary,
-                        )
+                        recipe?.let { it1 ->
+                            Text(
+                                text = it1.category,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onSecondary,
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
@@ -133,25 +160,16 @@ fun ViewScreen(navController: NavController){
                             color = MaterialTheme.colorScheme.onSecondary,
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = "Some Location",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSecondary,
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        tags.forEach{ name ->
-                            ViewChip(
-                                name = name
+                        recipe?.let { it1 ->
+                            Text(
+                                text = it1.area,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onSecondary,
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     HorizontalDivider(
                         modifier = Modifier.padding(vertical = 8.dp),
                         thickness = 2.dp,
@@ -163,7 +181,7 @@ fun ViewScreen(navController: NavController){
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSecondary,
                         )
-                    ingredients.forEachIndexed { index, (name, quantity) ->
+                    ingredients.forEach {(name, quantity) ->
                         Row(modifier = Modifier.fillMaxWidth()){
                             Text(
                                 modifier = Modifier.weight(1f),
@@ -193,11 +211,13 @@ fun ViewScreen(navController: NavController){
                         color = MaterialTheme.colorScheme.onSecondary,
                     )
 
-                    Text(
-                        text = strInstructions,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSecondary
-                    )
+                    recipe?.let { it1 ->
+                        Text(
+                            text = it1.instructions,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
 
                 }
             }

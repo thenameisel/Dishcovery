@@ -20,6 +20,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.dishcovery.ui.theme.DishcoveryTheme
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,15 @@ class MainActivity : ComponentActivity() {
                         composable("saved") { SavedScreen(navController)  }
                         composable("create") {CreateScreen(navController)}
                         composable("view") {ViewScreen(navController)}
+                        composable(
+                            route = "view_recipe/{recipeId}",
+                            arguments = listOf(navArgument("recipeId") { type = NavType.StringType })
+                        ) { backStackEntry ->
+                            ViewScreen(
+                                navController = navController,
+                                recipeId = backStackEntry.arguments?.getString("recipeId")
+                            )
+                        }
                     }
                 }
             }

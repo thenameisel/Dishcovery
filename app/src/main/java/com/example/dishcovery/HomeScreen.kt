@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,7 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +60,7 @@ fun HomeMenuButton(
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(16.dp)
+
     ){
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -103,15 +107,22 @@ fun HomeScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    //.padding(16.dp),
             ) {
-                Spacer(modifier = Modifier.height(32.dp))
+                //Spacer(modifier = Modifier.height(32.dp))
+
+                val buttonWeight = 1f
+                val totalSpacerHeight = 40.dp // 2 spacers × 20.dp
+                val buttonHeight = (LocalDensity.current.run {
+                    (LocalConfiguration.current.screenHeightDp.dp - totalSpacerHeight) / 3
+                })
 
                 HomeMenuButton(
                     title = R.string.homeSearchTitle,
                     contents = R.string.homeSearchContents,
                     destination = "search",
-                    navController = navController
+                    navController = navController,
+                    modifier = Modifier.height(buttonHeight)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -120,7 +131,8 @@ fun HomeScreen(navController: NavController) {
                     title = R.string.homeSavedTitle,
                     contents = R.string.homeSavedContents,
                     destination = "saved",
-                    navController = navController
+                    navController = navController,
+                    modifier = Modifier.height(buttonHeight)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -129,7 +141,8 @@ fun HomeScreen(navController: NavController) {
                     title = R.string.homeCreateTitle,
                     contents = R.string.homeCreateContents,
                     destination = "create",
-                    navController = navController
+                    navController = navController,
+                    modifier = Modifier.height(buttonHeight)
                 )
             }
         }

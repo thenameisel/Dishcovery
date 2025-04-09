@@ -15,11 +15,9 @@ data class MealEntity(
     val category: String,
     val area: String,
     val instructions: String,
-    val ingredients: String,  // Store as JSON string
-
-    // Removed: isFavorite, API-related fields (idMeal, strMealThumb, etc.)
-    // Add user-specific fields if needed:
-    val createdAt: Long = System.currentTimeMillis()
+    val ingredients: String,
+    val createdAt: Long = System.currentTimeMillis(),
+    val mealThumb: String
 )
 
 //Old table? I dont know anymore

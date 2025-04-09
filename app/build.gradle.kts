@@ -42,17 +42,14 @@ android {
 }
 
 dependencies {
-
-
-    // Moshi (for JSON parsing)
+    implementation(libs.coil.compose)
     implementation(libs.moshi.kotlin)
     implementation (libs.converter.moshi)
-    ksp(libs.moshi.kotlin.codegen) // For code generation
-
-    // Room (for local database)
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.retrofit)
+    implementation(libs.converter.moshi)
     implementation(libs.androidx.room.runtime)
-    //implementation (libs.androidx.room.runtime.v260)
-    implementation (libs.androidx.room.ktx) // Coroutine support
+    implementation (libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)

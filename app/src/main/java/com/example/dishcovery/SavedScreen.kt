@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -45,14 +46,31 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
-
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.dishcovery.data.SavedRecipesViewModel
+import com.example.dishcovery.data.repository.MealRepository
 
 
 @Composable
 fun SavedScreen(navController: NavController){
-    var searchQuery by remember { mutableStateOf("") }
+    val repository = (LocalContext.current.applicationContext as DishcoveryApp).repository
+
+    // Initialize ViewModel with the existing repository
+    val viewModel: SavedRecipesViewModel = viewModel(
+        factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return SavedRecipesViewModel(repository) as T
+            }
+        }
+    )
+
+    val searchQuery by viewModel.searchQuery
+    val recipes = viewModel.filteredRecipes
     NavBarScreen(navController = navController) {
         Column(
             modifier = Modifier
@@ -62,7 +80,7 @@ fun SavedScreen(navController: NavController){
             Spacer(modifier = Modifier.height(32.dp))
             SearchBar(
                 query = searchQuery,
-                onQueryChange = { searchQuery = it }
+                onQueryChange = viewModel::onSearchQueryChanged
             )
             Box (
                 modifier = Modifier
@@ -77,26 +95,41 @@ fun SavedScreen(navController: NavController){
                         shape = RoundedCornerShape(8.dp)
                     )
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    //TODO this needs to display saved
-                    items(20) { index ->
-                        SearchItem(
-                            strMeal = "Temp Meal Title",
-                            strArea = "The World",
-                            strTags = "Food, Carbs, Salty",
-                            strMealThumb = "SomeAddress",
-                            destination = "home",
-                            navController = navController
-                        )
+                when {
+                    // Loading state
+                    recipes.isEmpty() && searchQuery.isEmpty() -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+                           //CircularProgressIndicator()
+                        }
+                    }
 
+                    // Empty state
+                    recipes.isEmpty() -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+                            Text("No recipes found", style = MaterialTheme.typography.bodyLarge)
+                        }
+                    }
+
+                    // Display recipes
+                    else -> {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(recipes) { recipe ->
+                                SearchItem(
+                                    recipe = recipe,
+                                    onItemClick = { id ->
+                                        navController.navigate("view_recipe/$id")
+                                    },
+                                    navController = navController
+                                )
+                            }
+                        }
                     }
                 }
-
             }
         }
     }

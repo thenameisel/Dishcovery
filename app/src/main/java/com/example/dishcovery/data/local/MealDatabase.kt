@@ -9,7 +9,7 @@ import com.example.dishcovery.data.local.entities.MealEntity
 
 @Database(
     entities = [MealEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false // Set to true if you want schema exports
 )
 @TypeConverters(Converters::class)

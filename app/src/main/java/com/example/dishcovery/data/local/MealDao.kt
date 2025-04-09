@@ -21,10 +21,13 @@ interface MealDao {
     suspend fun insertRecipe(recipe: MealEntity): Long  // Returns generated ID
 
     @Query("SELECT * FROM user_recipes")
-    fun getAllUserRecipes(): List<MealEntity>  // Observe changes
+    suspend fun getAllUserRecipes(): List<MealEntity>  // Observe changes
 
     @Delete
     suspend fun deleteRecipe(recipe: MealEntity)
+
+    @Query("SELECT * FROM user_recipes WHERE id = :id")
+    suspend fun getRecipeById(id: String): MealEntity?
 }
 
 //Old Dao??? No idea

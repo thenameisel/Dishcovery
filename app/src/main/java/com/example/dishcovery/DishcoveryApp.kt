@@ -3,8 +3,10 @@ package com.example.dishcovery
 import com.example.dishcovery.data.local.MealDatabase
 import android.app.Application
 import android.util.Log
-import androidx.room.Room
+import com.example.dishcovery.data.remote.MealApiService
 import com.example.dishcovery.data.repository.MealRepository
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 class DishcoveryApp : Application() {
     val database by lazy {
@@ -17,9 +19,16 @@ class DishcoveryApp : Application() {
         MealRepository(database.mealDao())
     }
 
+    val apiService: MealApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://www.themealdb.com/api/json/v1/1/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(MealApiService::class.java)
+    }
+
     override fun onCreate() {
         super.onCreate()
-        // Optional: Initialize here if you need early access
         Log.d("APP_LIFECYCLE", "Application created")
     }
 }
