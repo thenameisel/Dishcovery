@@ -25,17 +25,6 @@ class SearchViewModel(
     private val _recipes = mutableStateOf<List<MealEntity>>(emptyList())
     val recipes: State<List<MealEntity>> = _recipes
 
-    // Conversion extension
-//    private fun MealApiService.Meal.toMealEntity(): MealEntity = MealEntity(
-//        id = idMeal.toLong(),
-//        name = strMeal,
-//        category = strCategory,
-//        area = strArea,
-//        ingredients = "", // Will be filled from details API
-//        instructions = "", // Will be filled from details API
-//        mealThumb = strMealThumb
-//    )
-
     fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
     }
@@ -74,34 +63,6 @@ class SearchViewModel(
             }
         }
     }
-
-//    fun searchRecipes(query: String = "") {
-//        viewModelScope.launch {
-//            try {
-//                val apiResponse = if (query.isBlank()) {
-//                    apiService.getAllRecipes()
-//                } else {
-//                    apiService.searchRecipes(query)
-//                }
-//                _recipes.value = apiResponse.meals?.map { apiMeal ->
-//                    MealEntity(
-//                        id = apiMeal.idMeal.toLong(),
-//                        name = apiMeal.strMeal,
-//                        category = apiMeal.strCategory ?: "Unknown",
-//                        area = apiMeal.strArea ?: "Unknown",
-//                        ingredients = "", // Will need separate API call
-//                        instructions = "", // Will need separate API call
-//                        mealThumb = apiMeal.strMealThumb ?: ""
-//                    )
-//                } ?: emptyList()
-//                Log.d("API_DEBUG", "Displaying ${_recipes.value.size} items")
-//            } catch (e: Exception) {
-//                _recipes.value = emptyList()
-//            }
-//        }
-//    }
-
-
 
 }
 

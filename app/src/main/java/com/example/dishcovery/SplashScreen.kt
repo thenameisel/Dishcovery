@@ -2,10 +2,7 @@ package com.example.dishcovery
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.graphics.ColorFilter
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -22,9 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dishcovery.ui.theme.DishcoveryTheme
 import kotlinx.coroutines.delay
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.navigation.compose.rememberNavController
-import androidx.compose.material3.Surface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -45,7 +39,7 @@ fun SplashScreen(navController: NavController) {
                 painter = painterResource(R.mipmap.ic_launcher_foreground),
                 contentDescription = "App Logo",
                 modifier = Modifier.size(200.dp),
-                //colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+
             )
         }
         LaunchedEffect(Unit) {

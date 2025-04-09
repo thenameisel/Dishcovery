@@ -5,6 +5,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,42 +19,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.ComposeNavigator
 import com.example.dishcovery.ui.theme.DishcoveryTheme
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.draw.clip
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.dishcovery.data.SavedRecipesViewModel
 import com.example.dishcovery.data.SearchViewModel
 import com.example.dishcovery.data.local.entities.MealEntity
 
@@ -85,7 +71,10 @@ fun SearchItem(
                     model = recipe.mealThumb,
                     contentDescription = recipe.name,
                     modifier = Modifier
-                        .size(100.dp),
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .border(2.dp, MaterialTheme.colorScheme.tertiary, RoundedCornerShape(8.dp))
+                        .padding(8.dp),
                     contentScale = ContentScale.Crop,
                     placeholder = painterResource(R.mipmap.ic_launcher_foreground),
                     error = painterResource(R.mipmap.ic_launcher_foreground)
@@ -96,12 +85,15 @@ fun SearchItem(
                     painter = painterResource(R.mipmap.ic_launcher_foreground),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .size(100.dp),
+                        .size(100.dp)
+                        .padding(8.dp),
                     contentScale = ContentScale.Fit
                 )
             }
             Column (modifier = Modifier.weight(1f)){
                 Text(
+                    modifier = Modifier
+                        .padding(8.dp),
                     text = recipe.name,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSecondary

@@ -2,7 +2,6 @@ package com.example.dishcovery
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,13 +31,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -53,10 +49,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dishcovery.data.CreateRecipeViewModel
 import com.example.dishcovery.data.CreateRecipeViewModelFactory
-import com.example.dishcovery.data.repository.MealRepository
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -231,8 +224,6 @@ fun CreateScreen(navController: NavController){
             ingredients.isNotEmpty() &&
             instructions.isNotBlank()
 
-
-    //val json = Json { ignoreUnknownKeys = true }
 
     NavBarScreen(navController = navController) {
         Column(

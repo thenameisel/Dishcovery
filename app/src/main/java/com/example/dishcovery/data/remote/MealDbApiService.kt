@@ -130,9 +130,6 @@ interface MealApiService {
         @field:Json(name = "meals") val meals: List<Meal>?
     )
 
-//    data class CategoriesResponse(
-//        @field:Json(name = "meals") val categories: List<Category>?
-//    )
 
     data class Meal(
         @field:Json(name = "idMeal") val idMeal: String,
@@ -142,11 +139,6 @@ interface MealApiService {
         @field:Json(name = "strArea") val strArea: String? = null
     )
 
-
-    //I dont think this is being used
-    data class Category(
-        @field:Json(name = "strCategory") val name: String
-    )
 }
 object MealApi {
     val service: MealApiService by lazy {

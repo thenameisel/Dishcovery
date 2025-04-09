@@ -2,13 +2,9 @@ package com.example.dishcovery
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +30,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,33 +37,6 @@ import com.example.dishcovery.data.RecipeDetailViewModel
 import com.example.dishcovery.data.RecipeDetailViewModelFactory
 import kotlinx.serialization.json.Json
 
-
-//@Composable
-//fun ViewChip(name: String) {
-//    val displayText = name
-//
-//    Surface(
-//        shape = RoundedCornerShape(16.dp),
-//        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-//        color = MaterialTheme.colorScheme.tertiary
-//    ) {
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-//            modifier = Modifier.padding(end = 8.dp)
-//        ) {
-//            Text(
-//                text = displayText,
-//                modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp, end = 4.dp),
-//                style = MaterialTheme.typography.bodyMedium,
-//                color = MaterialTheme.colorScheme.onPrimary,
-//            )
-//
-//        }
-//    }
-//}
-
-
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ViewScreen(navController: NavController,recipeId: String? = null){
 
@@ -94,7 +62,7 @@ fun ViewScreen(navController: NavController,recipeId: String? = null){
             try {
                 Json.decodeFromString<List<Pair<String, String>>>(it)
             } catch (e: Exception) {
-                emptyList<Pair<String, String>>() // Fallback if parsing fails
+                emptyList<Pair<String, String>>()
             }
         } ?: emptyList()
     }

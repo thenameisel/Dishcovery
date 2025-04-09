@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -107,11 +106,8 @@ fun HomeScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    //.padding(16.dp),
             ) {
-                //Spacer(modifier = Modifier.height(32.dp))
 
-                val buttonWeight = 1f
                 val totalSpacerHeight = 40.dp // 2 spacers × 20.dp
                 val buttonHeight = (LocalDensity.current.run {
                     (LocalConfiguration.current.screenHeightDp.dp - totalSpacerHeight) / 3

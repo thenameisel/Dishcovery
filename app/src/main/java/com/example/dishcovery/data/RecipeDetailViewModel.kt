@@ -1,7 +1,6 @@
 package com.example.dishcovery.data
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,11 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.dishcovery.data.local.entities.MealEntity
 import com.example.dishcovery.data.remote.MealApiService
 import com.example.dishcovery.data.repository.MealRepository
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.reflect.KProperty1
 
 class RecipeDetailViewModel(
     private val repository: MealRepository,

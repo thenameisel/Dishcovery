@@ -4,7 +4,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.dishcovery.data.Converters
 import com.example.dishcovery.data.local.entities.MealEntity
 
 @Database(
@@ -12,7 +11,7 @@ import com.example.dishcovery.data.local.entities.MealEntity
     version = 2,
     exportSchema = false // Set to true if you want schema exports
 )
-@TypeConverters(Converters::class)
+@TypeConverters
 abstract class MealDatabase : RoomDatabase() {
     abstract fun mealDao(): MealDao
 

@@ -1,10 +1,8 @@
 package com.example.dishcovery.data
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.dishcovery.data.local.entities.MealEntity
 import com.example.dishcovery.data.repository.MealRepository
-import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
